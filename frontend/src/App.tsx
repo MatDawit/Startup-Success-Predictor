@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowRight, ArrowLeft, Check, ChevronRight } from 'lucide-react';
 
 interface FormData {
@@ -273,10 +273,32 @@ function App() {
   const [currentPage, setCurrentPage] = useState<Page>('landing');
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [searchTerm, setSearchTerm] = useState('');
+  const [prediction, setPrediction] = useState(0);
+
+  const getPrediction = async () => {
+    const markets = formData.markets.join(",").trim();
+    const country = formData.country.trim();
+    const funding_rounds = 1; //Placeholder (replace with actual funding rounds later)
+    
+    //Testing
+    console.log("country: " + country);
+    console.log("markets: " + markets);
+    console.log("funding: " + funding_rounds);
+    console.log("request: " + `http://127.0.0.1:8000/get_prediction?country_str=${country}&funding_rounds=${funding_rounds}&categories_liststr=${markets}`)
+    
+    const response = await fetch(`http://127.0.0.1:8000/get_prediction?country_str=${country}&funding_rounds=${funding_rounds}&categories_liststr=${markets}`);
+    const data = await response.json();
+    setPrediction(data);
+  }
+
+  console.log("saved prediction: " + prediction);
 
   const handlePageChange = (page: Page) => {
     setCurrentPage(page);
     setSearchTerm(''); // Clear search term on every page change
+    if (page === "results") {
+      getPrediction();
+    }
   };
 
   const handleStartOver = () => {
@@ -460,7 +482,7 @@ function App() {
                 {filteredCountries.map((country) => (
                     <button
                         key={country.code}
-                        onClick={() => handleCountrySelect(country.name)}
+                        onClick={() => handleCountrySelect(country.code)}
                         className={`w-full flex items-center justify-between px-4 py-3 rounded-lg transition-colors ${
                             formData.country === country.name
                                 ? 'bg-blue-50 border-2 border-blue-200'
