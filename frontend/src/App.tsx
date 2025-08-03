@@ -5,14 +5,16 @@ interface FormData {
   country: string;
   markets: string[];
   funding: number;
+  funding_rounds: number;
 }
 
-type Page = 'landing' | 'location' | 'markets' | 'funding' | 'results' | 'model-details';
+type Page = 'landing' | 'location' | 'markets' | 'funding' | 'funding_rounds' | 'results' | 'model-details';
 
 const initialFormData: FormData = {
   country: '',
   markets: [],
-  funding: 1000000
+  funding: 1000000,
+  funding_rounds: 1
 };
 
 const countries = [
@@ -278,12 +280,14 @@ function App() {
   const getPrediction = async () => {
     const markets = formData.markets.join(",").trim();
     const country = formData.country.trim();
-    const funding_rounds = 1; //Placeholder (replace with actual funding rounds later)
+    const funding_rounds = formData.funding_rounds //Placeholder (replace with actual funding rounds later)
+    const funding = formData.funding;
     
     //Testing
     console.log("country: " + country);
     console.log("markets: " + markets);
-    console.log("funding: " + funding_rounds);
+    console.log("funding rounds: " + funding_rounds);
+    console.log("funding: " + funding);
     console.log("request: " + `http://127.0.0.1:8000/get_prediction?country_str=${country}&funding_rounds=${funding_rounds}&categories_liststr=${markets}`)
     
     const response = await fetch(`http://127.0.0.1:8000/get_prediction?country_str=${country}&funding_rounds=${funding_rounds}&categories_liststr=${markets}`);
@@ -588,9 +592,99 @@ function App() {
                 </button>
 
                 <button
-                    onClick={() => handlePageChange('funding')}
+                    onClick={() => handlePageChange('funding_rounds')}
                     disabled={formData.markets.length === 0}
                     className="flex items-center gap-2 px-6 py-3 bg-black text-white rounded-full disabled:bg-gray-300 disabled:cursor-not-allowed hover:bg-gray-800 transition-colors"
+                >
+                  Next
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+    );
+  }
+
+    // Funding Rounds Selection Page
+  if (currentPage === 'funding_rounds') {
+    const maxFundingRounds = 10; // $10M
+
+    return (
+        <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4 relative">
+          {/* Decorative circles */}
+          <div className="absolute left-0 top-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-gradient-to-r from-purple-300 to-pink-300 opacity-80 -translate-x-1/2"></div>
+          <div className="absolute right-0 top-1/2 -translate-y-1/2 w-64 h-64 rounded-full bg-gradient-to-l from-orange-300 to-red-300 opacity-80 translate-x-1/2"></div>
+
+          <div className="max-w-2xl mx-auto text-center relative z-10">
+            {/* Progress dots */}
+            <div className="flex justify-center gap-2 mb-12">
+              <div className="w-2 h-2 rounded-full bg-gray-800"></div>
+              <div className="w-2 h-2 rounded-full bg-gray-800"></div>
+              <div className="w-2 h-2 rounded-full bg-gray-800"></div>
+            </div>
+
+            <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-12 shadow-xl">
+              <h2 className="text-xl font-semibold text-gray-800 mb-8">
+                Number of funding rounds?
+              </h2>
+
+              <div className="mb-8">
+                <div className="relative mb-6">
+                  <div className="bg-orange-200 text-orange-800 px-4 py-2 rounded-full inline-block font-bold text-lg">
+                    {formData.funding_rounds}
+                  </div>
+                </div>
+
+                <input
+                    type="range"
+                    min="1"
+                    max={maxFundingRounds}
+                    step="1"
+                    value={formData.funding_rounds}
+                    onChange={(e) => setFormData(prev => ({ ...prev, funding_rounds: parseInt(e.target.value) }))}
+                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer mb-4"
+                    style={{
+                      background: `linear-gradient(to right, #F97316 0%, #F97316 ${((formData.funding_rounds - 1) / (maxFundingRounds - 1)) * 100}%, #E5E7EB ${((formData.funding_rounds - 1) / (maxFundingRounds - 1)) * 100}%, #E5E7EB 100%)`
+                    }}
+                />
+
+                {/* Range labels */}
+                <div className="flex justify-between text-sm text-gray-500 px-1">
+                  <span>1</span>
+                  <span>2</span>
+                  <span>3</span>
+                  <span>4</span>
+                  <span>5</span>
+                  <span>6</span>
+                  <span>7</span>
+                  <span>8</span>
+                  <span>9</span>
+                  <span>10</span>
+                </div>
+              </div>
+
+              <div className="bg-gray-100 rounded-lg p-4 mb-8">
+                <div className="text-sm text-gray-600 mb-1">Amount Selected:</div>
+                <div className="text-2xl font-bold text-gray-900">
+                  {formData.funding_rounds} 
+                  {formData.funding_rounds == 1 ? <p>Round</p> : <p>Rounds</p>}
+                </div>
+              </div>
+
+              <div className="flex justify-between">
+                <button
+                    onClick={() => handlePageChange('markets')}
+                    className="flex items-center gap-2 px-6 py-3 text-gray-600 hover:text-gray-800 transition-colors"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  Back
+                </button>
+
+                <button
+                  onClick={() => handlePageChange('funding')}
+                  disabled={!formData.country}
+                  className="flex items-center gap-2 px-6 py-3 bg-black text-white rounded-full disabled:bg-gray-300 disabled:cursor-not-allowed hover:bg-gray-800 transition-colors"
                 >
                   Next
                   <ArrowRight className="w-4 h-4" />
@@ -664,7 +758,7 @@ function App() {
 
               <div className="flex justify-between">
                 <button
-                    onClick={() => handlePageChange('markets')}
+                    onClick={() => handlePageChange('funding_rounds')}
                     className="flex items-center gap-2 px-6 py-3 text-gray-600 hover:text-gray-800 transition-colors"
                 >
                   <ArrowLeft className="w-4 h-4" />
@@ -686,7 +780,6 @@ function App() {
 
   // Results Page (placeholder - you can customize this)
   if (currentPage === 'results') {
-    const successProbability = Math.random() * 100;
 
     return (
         <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
@@ -697,16 +790,15 @@ function App() {
               </h1>
 
               <div className="mb-8">
+                <p className="text-xl text-gray-600">Your startup is likely to be a:</p>
                 <div className={`text-6xl font-bold mb-4 ${
-                    successProbability > 70 ? 'text-green-500' :
-                        successProbability > 40 ? 'text-yellow-500' : 'text-red-500'
+                    prediction == 1 ? 'text-green-500' : 'text-red-500'
                 }`}>
-                  {successProbability.toFixed(1)}%
+                  {prediction == 1 ? <p>Success</p> : <p>Fail</p>}
                 </div>
-                <p className="text-xl text-gray-600">Probability of Success</p>
               </div>
 
-              <div className="grid md:grid-cols-3 gap-6 mb-8">
+              <div className="grid md:grid-cols-4 gap-6 mb-8">
                 <div className="bg-gray-50 rounded-lg p-4">
                   <h3 className="font-semibold text-gray-800 mb-2">Location</h3>
                   <p className="text-gray-600">{formData.country}</p>
@@ -716,6 +808,10 @@ function App() {
                     {formData.markets.length === 1 ? 'Market' : 'Markets'}
                   </h3>
                   <p className="text-gray-600">{formData.markets.join(', ')}</p>
+                </div>
+                <div className="bg-gray-50 rounded-lg p-4">
+                  <h3 className="font-semibold text-gray-800 mb-2">Funding Rounds</h3>
+                  <p className="text-gray-600">{formData.funding_rounds}</p>
                 </div>
                 <div className="bg-gray-50 rounded-lg p-4">
                   <h3 className="font-semibold text-gray-800 mb-2">Funding</h3>

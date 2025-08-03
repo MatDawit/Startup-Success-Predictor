@@ -18,6 +18,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+
+
+
+
+
+
 #takes list of categories -> returns freq
 def get_category_freq(categories_list):
 
@@ -35,10 +42,20 @@ def get_category_freq(categories_list):
     return avg_freq
 
 
+
+
+#label-encoder
 def get_country_code(country_code_abrv):
     country_le = joblib.load('./country_label_encoder.joblib')
     # country_le = joblib.load('./country_label_encoder.joblib')
     return country_le.transform([country_code_abrv])
+
+
+
+
+
+
+
 
 @app.get("/get_prediction") #format: country_string -> 3 chars all uppercase, 
                             #funding_rounds -> str of number, categories_list -> comma separated categories
@@ -46,9 +63,10 @@ def get_country_code(country_code_abrv):
 async def get_prediction(country_str: str, funding_rounds: str, categories_liststr: str):
     rf_clasif = joblib.load("./3feat_classifier.joblib") #loads random forest classification model
 
-    country_code = get_country_code(country_str)
+    country_code = get_country_code(country_str) #IND, CHN
+    
+    # 
     category_freq = 0
-
     if categories_liststr:
         categories_list = categories_liststr.split(',')
         category_freq = get_category_freq(categories_list)
