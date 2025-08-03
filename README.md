@@ -1,3 +1,5 @@
+<img width="1918" height="552" alt="image" src="https://github.com/user-attachments/assets/700bc757-cd8f-4304-8161-a52a272e33d2" />
+
 # Startup Success Predictor
 A web application that uses a random forest classifier trained on historical startup data to predict startup status by its markets, country, and funding rounds.
 
