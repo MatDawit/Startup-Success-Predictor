@@ -3,6 +3,9 @@ import joblib #requirement
 #scikit-learn is also a requirement
 import pandas as pd #requirement
 from fastapi.middleware.cors import CORSMiddleware
+#uvicorn is a requirement
+
+#probably need uvicorn, scikit-learn
 
 app = FastAPI()
 
