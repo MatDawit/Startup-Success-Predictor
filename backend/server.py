@@ -10,7 +10,8 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
 origins = [
-    "http://localhost:5173"
+    "http://localhost:5173",
+    "https://matdawit.github.io/Startup-Success-Predictor"
 ]
 
 app.add_middleware(
