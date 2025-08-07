@@ -58,7 +58,9 @@ def get_country_code(country_code_abrv):
 
 
 
-
+@app.get("/")
+async def root():
+    return "Welcome to startup success predictor"
 
 @app.get("/get_prediction") #format: country_string -> 3 chars all uppercase, 
                             #funding_rounds -> str of number, categories_list -> comma separated categories
