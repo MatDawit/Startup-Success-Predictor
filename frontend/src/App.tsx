@@ -333,7 +333,8 @@ function App() {
   };
 
   const filteredCountries = countries.filter(country =>
-      country.name.toLowerCase().includes(searchTerm.toLowerCase())
+    country.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    country.code.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const filteredMarkets = marketCategories.filter(market =>
@@ -420,7 +421,7 @@ function App() {
                 </p>
 
                 <ul className="ml-6">
-                  <li className="mb-2">• Kaggle "Startup Success/Fail Dataset" (link)</li>
+                  <li className="mb-2">• Kaggle "Startup Success/Fail Dataset" (<a href="https://www.kaggle.com/datasets/yanmaksi/big-startup-secsees-fail-dataset-from-crunchbase" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">link</a>)</li>
                 </ul>
 
                 <p className="text-lg">
@@ -454,11 +455,10 @@ function App() {
           <div className="absolute right-0 top-1/2 -translate-y-1/2 w-64 h-64 rounded-full bg-gradient-to-l from-blue-300 to-blue-400 opacity-80 translate-x-1/2"></div>
 
           <div className="max-w-2xl mx-auto text-center relative z-10">
-            {/* Progress dots */}
+            {/* Progress dots (3 dots only) */}
             <div className="flex justify-center gap-2 mb-12">
               <div className="w-2 h-2 rounded-full bg-gray-800"></div>
-              <div className="w-2 h-2 rounded-full bg-gray-300"></div>
-              <div className="w-2 h-2 rounded-full bg-gray-300"></div>
+              <div className="w-2 h-2 rounded-full bg-gray-800"></div>
               <div className="w-2 h-2 rounded-full bg-gray-300"></div>
             </div>
 
@@ -545,11 +545,10 @@ function App() {
           <div className="absolute right-0 top-1/2 -translate-y-1/2 w-64 h-64 rounded-full bg-gradient-to-l from-yellow-300 to-orange-300 opacity-80 translate-x-1/2"></div>
 
           <div className="max-w-2xl mx-auto text-center relative z-10">
-            {/* Progress dots */}
+            {/* Progress dots (3 dots only) */}
             <div className="flex justify-center gap-2 mb-12">
               <div className="w-2 h-2 rounded-full bg-gray-800"></div>
               <div className="w-2 h-2 rounded-full bg-gray-800"></div>
-              <div className="w-2 h-2 rounded-full bg-gray-300"></div>
               <div className="w-2 h-2 rounded-full bg-gray-300"></div>
             </div>
 
@@ -619,7 +618,7 @@ function App() {
 
     // Funding Rounds Selection Page
   if (currentPage === 'funding_rounds') {
-    const maxFundingRounds = 10; // $10M
+    const maxFundingRounds = 10;
 
     return (
         <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4 relative">
@@ -628,9 +627,8 @@ function App() {
           <div className="absolute right-0 top-1/2 -translate-y-1/2 w-64 h-64 rounded-full bg-gradient-to-l from-orange-300 to-red-300 opacity-80 translate-x-1/2"></div>
 
           <div className="max-w-2xl mx-auto text-center relative z-10">
-            {/* Progress dots */}
+            {/* Progress dots (3 dots only) */}
             <div className="flex justify-center gap-2 mb-12">
-              <div className="w-2 h-2 rounded-full bg-gray-800"></div>
               <div className="w-2 h-2 rounded-full bg-gray-800"></div>
               <div className="w-2 h-2 rounded-full bg-gray-800"></div>
               <div className="w-2 h-2 rounded-full bg-gray-300"></div>
@@ -694,11 +692,10 @@ function App() {
                 </button>
 
                 <button
-                  onClick={() => handlePageChange('funding')}
-                  disabled={!formData.country}
-                  className="flex items-center gap-2 px-6 py-3 bg-black text-white rounded-full disabled:bg-gray-300 disabled:cursor-not-allowed hover:bg-gray-800 transition-colors"
+                  onClick={() => handlePageChange('results')}
+                  className="flex items-center gap-2 px-6 py-3 bg-black text-white rounded-full hover:bg-gray-800 transition-colors"
                 >
-                  Next
+                  Generate Predictions
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
@@ -708,90 +705,7 @@ function App() {
     );
   }
 
-  // Funding Selection Page
-  if (currentPage === 'funding') {
-    const maxFunding = 10000000; // $10M
-
-    return (
-        <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4 relative">
-          {/* Decorative circles */}
-          <div className="absolute left-0 top-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-gradient-to-r from-purple-300 to-pink-300 opacity-80 -translate-x-1/2"></div>
-          <div className="absolute right-0 top-1/2 -translate-y-1/2 w-64 h-64 rounded-full bg-gradient-to-l from-orange-300 to-red-300 opacity-80 translate-x-1/2"></div>
-
-          <div className="max-w-2xl mx-auto text-center relative z-10">
-            {/* Progress dots */}
-            <div className="flex justify-center gap-2 mb-12">
-              <div className="w-2 h-2 rounded-full bg-gray-800"></div>
-              <div className="w-2 h-2 rounded-full bg-gray-800"></div>
-              <div className="w-2 h-2 rounded-full bg-gray-800"></div>
-              <div className="w-2 h-2 rounded-full bg-gray-800"></div>
-            </div>
-
-            <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-12 shadow-xl">
-              <h2 className="text-xl font-semibold text-gray-800 mb-8">
-                Startup funding raised (in USD)?
-              </h2>
-
-              <div className="mb-8">
-                <div className="relative mb-6">
-                  <div className="bg-orange-200 text-orange-800 px-4 py-2 rounded-full inline-block font-bold text-lg">
-                    {formatFunding(formData.funding)}
-                  </div>
-                </div>
-
-                <input
-                    type="range"
-                    min="0"
-                    max={maxFunding}
-                    step="1000"
-                    value={formData.funding}
-                    onChange={(e) => setFormData(prev => ({ ...prev, funding: parseInt(e.target.value) }))}
-                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer mb-4"
-                    style={{
-                      background: `linear-gradient(to right, #F97316 0%, #F97316 ${(formData.funding / maxFunding) * 100}%, #E5E7EB ${(formData.funding / maxFunding) * 100}%, #E5E7EB 100%)`
-                    }}
-                />
-
-                {/* Range labels */}
-                <div className="flex justify-between text-sm text-gray-500 px-1">
-                  <span>$0</span>
-                  <span>$2.5M</span>
-                  <span>$5M</span>
-                  <span>$7.5M</span>
-                  <span>$10M</span>
-                </div>
-              </div>
-
-              <div className="bg-gray-100 rounded-lg p-4 mb-8">
-                <div className="text-sm text-gray-600 mb-1">Amount Selected:</div>
-                <div className="text-2xl font-bold text-gray-900">
-                  ${formData.funding.toLocaleString()}
-                </div>
-              </div>
-
-              <div className="flex justify-between">
-                <button
-                    onClick={() => handlePageChange('funding_rounds')}
-                    className="flex items-center gap-2 px-6 py-3 text-gray-600 hover:text-gray-800 transition-colors"
-                >
-                  <ArrowLeft className="w-4 h-4" />
-                  Back
-                </button>
-
-                <button
-                    onClick={() => handlePageChange('results')}
-                    className="bg-black text-white px-8 py-4 rounded-full font-semibold hover:bg-gray-800 transition-colors"
-                >
-                  Generate Predictions
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-    );
-  }
-
-  // Results Page (placeholder - you can customize this)
+  // Results Page (updated, removed funding amount)
   if (currentPage === 'results') {
 
     return (
@@ -811,7 +725,7 @@ function App() {
                 </div>
               </div>
 
-              <div className="grid md:grid-cols-4 gap-6 mb-8">
+              <div className="grid md:grid-cols-3 gap-6 mb-8">
                 <div className="bg-gray-50 rounded-lg p-4">
                   <h3 className="font-semibold text-gray-800 mb-2">Location</h3>
                   <p className="text-gray-600">{formData.country}</p>
@@ -825,10 +739,6 @@ function App() {
                 <div className="bg-gray-50 rounded-lg p-4">
                   <h3 className="font-semibold text-gray-800 mb-2">Funding Rounds</h3>
                   <p className="text-gray-600">{formData.funding_rounds}</p>
-                </div>
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <h3 className="font-semibold text-gray-800 mb-2">Funding</h3>
-                  <p className="text-gray-600">{formatFunding(formData.funding)}</p>
                 </div>
               </div>
 
