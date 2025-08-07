@@ -288,9 +288,9 @@ function App() {
     console.log("markets: " + markets);
     console.log("funding rounds: " + funding_rounds);
     console.log("funding: " + funding);
-    console.log("request: " + `http://127.0.0.1:8000/get_prediction?country_str=${country}&funding_rounds=${funding_rounds}&categories_liststr=${markets}`)
+    console.log("request: " + `https://startup-success-predictor-github-io.onrender.com/get_prediction?country_str=${country}&funding_rounds=${funding_rounds}&categories_liststr=${markets}`)
     
-    const response = await fetch(`http://127.0.0.1:8000/get_prediction?country_str=${country}&funding_rounds=${funding_rounds}&categories_liststr=${markets}`);
+    const response = await fetch(`https://startup-success-predictor-github-io.onrender.com/get_prediction?country_str=${country}&funding_rounds=${funding_rounds}&categories_liststr=${markets}`);
     const data = await response.json();
     setPrediction(data);
   }
