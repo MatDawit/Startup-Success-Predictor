@@ -424,7 +424,7 @@ function App() {
                 </ul>
 
                 <p className="text-lg">
-                  Predictions aggregated from 5 random forest classifiers
+                  Predictions aggregated from 1 random forest classifiers
                 </p>
 
                 <ul className="ml-6">
@@ -432,11 +432,11 @@ function App() {
                 </ul>
 
                 <p className="text-lg mt-8">
-                  feel free to add more! (credits, research question, etc.)
+                  
                 </p>
 
                 <p className="text-gray-500 mt-8">
-                  Last updated: 7/28/2025
+                  Last updated: 8/8/2025
                 </p>
               </div>
             </div>
@@ -457,6 +457,7 @@ function App() {
             {/* Progress dots */}
             <div className="flex justify-center gap-2 mb-12">
               <div className="w-2 h-2 rounded-full bg-gray-800"></div>
+              <div className="w-2 h-2 rounded-full bg-gray-300"></div>
               <div className="w-2 h-2 rounded-full bg-gray-300"></div>
               <div className="w-2 h-2 rounded-full bg-gray-300"></div>
             </div>
@@ -484,21 +485,30 @@ function App() {
 
               <div className="space-y-2 max-h-60 overflow-y-auto">
                 {filteredCountries.map((country) => (
-                    <button
-                        key={country.code}
-                        onClick={() => handleCountrySelect(country.code)}
-                        className={`w-full flex items-center justify-between px-4 py-3 rounded-lg transition-colors ${
-                            formData.country === country.name
-                                ? 'bg-blue-50 border-2 border-blue-200'
-                                : 'hover:bg-gray-50 border-2 border-transparent'
-                        }`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <span className="text-2xl">{country.flag}</span>
-                        <span className="font-medium">{country.name}</span>
+                  <button
+                    key={country.code}
+                    onClick={() => handleCountrySelect(country.code)}
+                    className={`w-full flex items-center justify-between px-4 py-3 rounded-lg transition-colors ${
+                      formData.country === country.code
+                        ? 'bg-blue-50 border-2 border-blue-200'
+                        : 'hover:bg-gray-50 border-2 border-transparent'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className={`w-5 h-5 rounded border-2 flex items-center justify-center ${
+                        formData.country === country.code
+                          ? 'bg-black border-black'
+                          : 'border-gray-300'
+                      }`}>
+                        {formData.country === country.code && (
+                          <Check className="w-3 h-3 text-white" />
+                        )}
                       </div>
-                      <span className="text-gray-400 text-sm">{country.code}</span>
-                    </button>
+                      <span className="text-2xl">{country.flag}</span>
+                      <span className="font-medium">{country.name}</span>
+                    </div>
+                    <span className="text-gray-400 text-sm">{country.code}</span>
+                  </button>
                 ))}
               </div>
 
@@ -539,6 +549,7 @@ function App() {
             <div className="flex justify-center gap-2 mb-12">
               <div className="w-2 h-2 rounded-full bg-gray-800"></div>
               <div className="w-2 h-2 rounded-full bg-gray-800"></div>
+              <div className="w-2 h-2 rounded-full bg-gray-300"></div>
               <div className="w-2 h-2 rounded-full bg-gray-300"></div>
             </div>
 
@@ -622,6 +633,7 @@ function App() {
               <div className="w-2 h-2 rounded-full bg-gray-800"></div>
               <div className="w-2 h-2 rounded-full bg-gray-800"></div>
               <div className="w-2 h-2 rounded-full bg-gray-800"></div>
+              <div className="w-2 h-2 rounded-full bg-gray-300"></div>
             </div>
 
             <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-12 shadow-xl">
@@ -709,6 +721,7 @@ function App() {
           <div className="max-w-2xl mx-auto text-center relative z-10">
             {/* Progress dots */}
             <div className="flex justify-center gap-2 mb-12">
+              <div className="w-2 h-2 rounded-full bg-gray-800"></div>
               <div className="w-2 h-2 rounded-full bg-gray-800"></div>
               <div className="w-2 h-2 rounded-full bg-gray-800"></div>
               <div className="w-2 h-2 rounded-full bg-gray-800"></div>
