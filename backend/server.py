@@ -11,7 +11,8 @@ app = FastAPI()
 
 origins = [
     "http://localhost:5173",
-    "https://matdawit.github.io/Startup-Success-Predictor"
+    "https://matdawit.github.io/Startup-Success-Predictor",
+    "https://matdawit.github.io/Startup-Success-Predictor/"
 ]
 
 app.add_middleware(
