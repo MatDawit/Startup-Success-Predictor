@@ -5,7 +5,7 @@ A web application that uses a random forest classifier trained on historical sta
 
 Data sourced from Crunchbase, link to Kaggle dataset:<a href="https://www.kaggle.com/datasets/yanmaksi/big-startup-secsees-fail-dataset-from-crunchbase">🚀Startup Success/Fail Dataset from Crunchbase</a>
 ## Demo
-Try it at <a href="https://matdawit.github.io/Startup-Success-Predictor/">matdawit.github.io/Startup-Success-Predictor/!</a>
+Try it out at <a href="https://matdawit.github.io/Startup-Success-Predictor/">matdawit.github.io/Startup-Success-Predictor/</a>!
 
 ## Installation 🖥️
 1. Clone the repository:
